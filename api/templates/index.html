@@ -12,8 +12,8 @@
     />
   </head>
   <body>
+    <a href="/logout/" class="btn btn-info">Logout</a>
     <div class="container p-5 mt-5 border rounded d-flex flex-column">
-
       {% if messages %}
         {% for message in messages %}
           <div class="alert alert-success text-center">
@@ -50,6 +50,7 @@
             <th scope="col">Student Name</th>
             <th scope="col">Description</th>
             <th scope="col">Actions</th>
+            <th scope="col">Image</th>
           </tr>
         </thead>
         <tbody>
@@ -80,6 +81,13 @@
                 </div>
               </div>
             </td>
+            <td>
+              {% if student.image %}
+                <img src="{{ student.image.url }}" alt="Student Image" width="60" height="60" class="img-thumbnail" />
+              {% else %}
+                No Image
+              {% endif %}
+            </td>
           </tr>
           <!-- update student modal -->
           <div
@@ -90,7 +98,7 @@
             aria-hidden="true"
           >
             <div class="modal-dialog">
-              <form method="post">
+              <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="modal-content">
                   <div class="modal-header">
@@ -129,6 +137,11 @@
                         id="description"
                         value="{{student.description}}"
                       />
+                    </div>
+                    <br />
+                    <div class="">
+                      <label for="userimage">Update image</label><br />
+                      <input class="form-control" type="file" name="userimage" id="userimage" />
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -202,7 +215,7 @@
       aria-hidden="true"
     >
       <div class="modal-dialog">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="modal-content">
             <div class="modal-header">
@@ -230,6 +243,11 @@
                   name="description"
                   id="description"
                 />
+              </div>
+              <br />
+              <div class="">
+                <label for="userimage">Upload image</label><br />
+                <input class="form-control" type="file" name="userimage" id="userimage" />
               </div>
             </div>
             <div class="modal-footer">
